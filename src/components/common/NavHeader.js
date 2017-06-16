@@ -12,31 +12,28 @@ class NavHeader extends React.Component {
 
     render() {
 
-      const app = this.props.app;
-      let userDisplayName = app.user ? app.user.UserDisplayName : '';
-      console.log('MONKEY NAV');
-      console.log(app);
+        const app = this.props.app;
 
         return (
-               <div>
-                   <div id="navbar" className="navbar navbar-inverse navbar-fixed-top">
-                     <div className="container">
-                       <div className="navbar-header">
-                         <IndexLink className="navbar-brand" to="/">LOGO</IndexLink>
-                       </div>
-                       <div className="navbar-collapse collapse">
-                         <div className="float-right pad-top-10">
-                           <span><i className="fa fa-info-circle gray-5 font-1-40" /> <span className="BebasNeue font-1-40 opacity-60 pad-left-5">{ userDisplayName }</span></span> <span className="gray-6">o</span>
-                         </div>
-                         <ul className="nav navbar-nav">
-                           <li><IndexLink activeClassName="active" to="/">Home</IndexLink></li>
-                           <li><Link activeClassName="active" to="/about">About</Link></li>
-                         </ul>
-                       </div>
-                     </div>
-                   </div>
-               </div>
-           );
+                <div className="navbar-root">
+                    <div id="navbar" className="navbar navbar-inverse navbar-fixed-top">
+                      <div className="container">
+                        <div className="navbar-header">
+                          <IndexLink className="navbar-brand" to="/">MRC</IndexLink>
+                        </div>
+                        <div className="navbar-collapse collapse">
+                          <div className="float-right pad-top-15 pointer">
+                            <span className="float-right"><i className="fa fa-user-circle gray-5 font-1-10" /> <span style={{marginTop: "-1px"}} className="float-right Lato font-1-00 opacity-60 pad-left-5 lowercase">{ app.user.UserDisplayName }</span></span>
+                          </div>
+                          <ul className="nav navbar-nav">
+                            <li><IndexLink activeClassName="active" to="/">Home</IndexLink></li>
+                            <li><Link activeClassName="active" to="/about">About</Link></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+               );
     }
 }
 

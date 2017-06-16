@@ -8,7 +8,7 @@ const AboutPage = () => {
     <div>
       <h1>About</h1>
       <p>
-        This is what it's all about.
+        About content.
       </p>
       <p>
         <Link to="/badlink">Click to 404 page.</Link>

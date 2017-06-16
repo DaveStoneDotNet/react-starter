@@ -3,14 +3,33 @@ import delay from './delay';
 // This file mocks a web API by working with the hard-coded data below. It uses setTimeout to simulate the delay of an AJAX call. All calls return promises.
 const users = [
                   {
-                      id: '01',
-                      UserDisplayName: 'Dave'
+                    UserId:          21981,
+                    UserInitials:    "LDS",
+                    UserDisplayName: "Dave Stone",
+                    PrimaryRoleName: "Administrator",
+                    RoleNames:       ["Administrator", "Reviewer"],
+                    HasRole:         true,
+                    IsAdministrator: true,
+                    IsSuccessful:    true,
+                    IsAuthenticated: true
                   }
                 ];
 
 const lookups = [
                   {
-                      id: '01',
+                      Code:        "01",
+                      Description: "Alpha", 
+                      SortOrder:   1
+                  }, 
+                  {
+                      Code:        "02",
+                      Description: "Beta", 
+                      SortOrder:   2
+                  }, 
+                  {
+                      Code:        "03",
+                      Description: "Gamma", 
+                      SortOrder:   3
                   }
                 ];
 
