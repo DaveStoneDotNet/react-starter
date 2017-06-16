@@ -14,8 +14,8 @@ class NavHeader extends React.Component {
 
       const app = this.props.app;
       let userDisplayName = app.user ? app.user.UserDisplayName : '';
-        console.log('MONKEY NAV');
-        console.log(app);
+      console.log('MONKEY NAV');
+      console.log(app);
 
         return (
                <div>
