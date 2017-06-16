@@ -27,6 +27,7 @@ class NavHeader extends React.Component {
                           </div>
                           <ul className="nav navbar-nav">
                             <li><IndexLink activeClassName="active" to="/">Home</IndexLink></li>
+                            <li><Link activeClassName="active" to="/data">Data</Link></li>
                             <li><Link activeClassName="active" to="/about">About</Link></li>
                           </ul>
                         </div>
