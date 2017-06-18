@@ -15,7 +15,7 @@ class AppFooter extends React.Component {
         return (
             <div>
                 <div id="footer" className="footer pointer">
-                  <i className="fa fa-cog fa-spin gray-9 font-1-10" /> message
+                  <i className="fa fa-cog fa-spin gray-9 font-1-10" /> <span className="app-working-message">Working...</span>
                   <span className="float-right"><i className="fa fa-clone gray-9 font-1-10" /></span>
                 </div>
             </div>

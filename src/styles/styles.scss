@@ -950,7 +950,7 @@ table.runbook-table {
 }
 
 .dark-textured-bg {
-    background-image: url('../images/binding_dark.png');
+    background-image: url('/images/binding_dark.png');
 }
 
 .splash-loading {
@@ -961,7 +961,7 @@ table.runbook-table {
     top: 0;
     bottom: 0;
     text-align: center;
-    background-image: url('../images/binding_dark.png');
+    background-image: url('/images/binding_dark.png');
 }
 
 .app-initializing {
@@ -1008,6 +1008,10 @@ table.runbook-table {
     @include border-radius(8px);
 }
 
+.app-working-message {
+    letter-spacing: 2px;
+    opacity: 0.50;
+}
 
 .home-brand-button-block {
     display: block; 
@@ -1560,7 +1564,7 @@ a.static-link:visited {
     color: $gray-6;
     font-family: BebasNeue;
     font-size: 2.0em;
-    background-image: url('../images/binding_dark.png');
+    background-image: url('/images/binding_dark.png');
     padding: 20px;
 }
 
@@ -1600,7 +1604,6 @@ a.static-link:visited {
     margin: 10px;
 }
 
-.homeContainer {
-
+.home-container {
 }
 
