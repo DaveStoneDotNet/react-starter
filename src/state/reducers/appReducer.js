@@ -1,6 +1,6 @@
 ﻿
-import * as types   from '../constants/actionTypes';
-import initialState from '../reducers/initialState';
+import * as types   from '../actions/actionTypes';
+import initialState from './initialState';
 
 // - The whole state of an app is stored in an object tree inside a single store.
 // - The only way to change the state tree is to emit an action, an object describing what happened.

@@ -1,6 +1,6 @@
 ﻿
-import MrcApi            from '../api/mockMrcApi';
-import * as types        from '../constants/actionTypes';
+import MrcApi            from '../../api/mockMrcApi';
+import * as types        from './actionTypes';
 
 // -----------------------------------------------------------------------------------------------------------------------
 // Actions:

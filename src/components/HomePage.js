@@ -5,7 +5,7 @@ import { connect }            from 'react-redux';
 import { Button }             from 'react-bootstrap';
 import { Modal }              from 'react-bootstrap';
 
-import * as appActions        from '../actions/appActions';
+import * as appActions        from '../state/actions/appActions';
 
 class HomePage extends React.Component {
 
@@ -41,7 +41,7 @@ class HomePage extends React.Component {
         <Button bsStyle="primary" onClick={() => getData()}>Data</Button>
 
         <div>
-          INFO: {app.home.data} - {app.ajaxCount} - {app.isInitialized} - {app.user.IsAuthenticated.toString()}
+          INFO: {app.home.info} - {app.ajaxCount} - {app.isInitialized} - {app.user.IsAuthenticated.toString()}
         </div>
 
         <div />

@@ -7,8 +7,8 @@ import { AppContainer }         from 'react-hot-loader';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import Root                     from './components/Root';
-import configureStore           from './store/configureStore';
-import * as appActions          from './actions/appActions';
+import configureStore           from './state/store/configureStore';
+import * as appActions          from './state/actions/appActions';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';

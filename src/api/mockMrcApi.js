@@ -34,7 +34,7 @@ const lookups = [
                 ];
 
 const arbitrary_data = {
-                         data: 'MOCK API DATA'
+                         info: 'MOCK API INFO'
                        };
 
 class MockMrcApi {

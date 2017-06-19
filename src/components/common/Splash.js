@@ -13,7 +13,7 @@ class Splash extends React.Component {
         const app = this.props.app;
 
         return (
-                   <div className={app.isAppInitialized ? "hide" : ""}>
+                <div className={app.isAppInitialized ? "hide" : ""}>
                     <div className="app-authenticating-box">
                         <div className="white opacity-50">
                             <div>
@@ -22,12 +22,9 @@ class Splash extends React.Component {
                             <div className="app-authenticating bounceInLeft animated">authenticating</div>
                             <img src="/images/running.gif" className="opacity-50"/>
                             <img src="/images/spiro.svg" className="spriro-02" />
-                            <div>
-                                {app.isAppInitialized.toString()}
-                            </div>
                         </div>
                     </div>
-                   </div>
+                </div>
                );
     }
 }
