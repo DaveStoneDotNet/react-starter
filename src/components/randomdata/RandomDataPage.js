@@ -15,8 +15,9 @@ class RandomDataPage extends React.Component {
     super(props, context);
     this.state = { 
                    showModal: false, 
-                   saving:    false
+                   isSaving:    false
                  };
+    toastr.options.positionClass = 'toast-bottom-right';
   }
 
   render() {
@@ -32,16 +33,16 @@ class RandomDataPage extends React.Component {
     };
 
     let getData = () => {
-      this.setState({ saving: true });
+      this.setState({ isSaving: true });
       this.props.actions.getData()
                         .then(() => {
-                          toastr.success('Loaded some random data');
+                          toastr.success('Loaded some random data', 'SUCCESS');
                         })
                         .catch((error) => { 
                           toastr.success('error');
                         })
                         .then(() => {
-                          this.setState({ saving: false });
+                          this.setState({ isSaving: false });
                         });
     };
 
@@ -51,10 +52,10 @@ class RandomDataPage extends React.Component {
         <h1>Random Experiments</h1>
 
         <Button bsStyle="info" onClick={() => openModel()}>Modal</Button> &nbsp;
-        <Button bsStyle="primary" disabled={this.state.saving} onClick={() => getData()}>{this.state.saving ? 'Getting...' : 'Get Data'}</Button>
+        <Button bsStyle="primary" disabled={this.state.isSaving} onClick={() => getData()}>{this.state.isSaving ? 'Getting...' : 'Get Data'}</Button>
 
         <div className="pad-20">
-          INFO: {app.home.info} : { this.state.saving.toString() }
+          INFO: {app.home.info} : { this.state.isSaving.toString() }
         </div>
 
         <div />
