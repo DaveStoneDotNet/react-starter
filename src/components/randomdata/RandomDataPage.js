@@ -5,11 +5,17 @@ import { connect }            from 'react-redux';
 import { Button }             from 'react-bootstrap';
 import { Modal }              from 'react-bootstrap';
 
+import ReactTable             from 'react-table'
+
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Sector, Cell } from 'recharts';
 
 import toastr                 from 'toastr';
 
+import RandomTable            from './RandomTable';
+
 import * as appActions        from '../../state/actions/appActions';
+
+import 'react-table/react-table.css'
 
 class RandomDataPage extends React.Component {
 
@@ -48,6 +54,8 @@ class RandomDataPage extends React.Component {
                         });
     };
 
+    // ---
+
     const lineData = [
                        {xname: ' ', uv: 4000, pv: 2400, amt: 2400},
                        {xname: ' ', uv: 3000, pv: 1398, amt: 2210},
@@ -58,14 +66,14 @@ class RandomDataPage extends React.Component {
                        {xname: ' ', uv: 3490, pv: 4300, amt: 2100},
                      ];
 
-    const data = [
-                    {name: 'A', value: 400}, 
-                    {name: 'B', value: 200}
-                  ];
+    const pieData = [
+                      {key: 'A', name: 'A', value: 400}, 
+                      {key: 'B', name: 'B', value: 200}
+                    ];
               
     const pieColors = ['#0088FE', '#00C49F'];
 
-    const RADIAN = Math.PI / 180;
+    // ---
 
     return (
       <div>
@@ -83,35 +91,39 @@ class RandomDataPage extends React.Component {
           Random Graphs
         </div>
         <table className="border">
-          <tr>
-            <td>
-              <div>
-                <LineChart width={200} height={200} data={lineData} margin={{ top: 30, right: 20, left: 30, bottom: 0 }}>
-                  <XAxis dataKey="xname" />
-                  <Tooltip />
-                  <CartesianGrid stroke="#444444" />
-                  <Line type="monotone" dataKey="uv" stroke="#ff7300" yAxisId={0} />
-                  <Line type="monotone" dataKey="pv" stroke="#0088FE" yAxisId={1} />
-                </LineChart>
-              </div>
-            </td>
-            <td>
-              <div>
-                <PieChart width={200} height={200} onMouseEnter={this.onPieEnter}>
-                  <Pie data={data} cx={100} cy={100} labelLine={false} label="o" outerRadius={80} fill="#8884d8">
-                    {
-                      data.map((entry, index) => <Cell fill={pieColors[index % pieColors.length]}/>)
-                    }
-                  </Pie>
-                </PieChart>
-              </div>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                <div>
+                  <LineChart width={200} height={200} data={lineData} margin={{ top: 30, right: 20, left: 30, bottom: 0 }}>
+                    <XAxis dataKey="xname" />
+                    <Tooltip />
+                    <CartesianGrid stroke="#444444" />
+                    <Line type="monotone" dataKey="uv" stroke="#ff7300" yAxisId={0} />
+                    <Line type="monotone" dataKey="pv" stroke="#0088FE" yAxisId={1} />
+                  </LineChart>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <PieChart width={200} height={200} onMouseEnter={this.onPieEnter}>
+                    <Pie data={pieData} cx={100} cy={100} labelLine={false} outerRadius={80} fill="#8884d8">
+                      {
+                         pieData.map((entry, index) => <Cell fill={pieColors[index % pieColors.length]}/>)
+                      }
+                    </Pie>
+                  </PieChart>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
 
+        <div className="col-md-6 pad-top-20">
+          <RandomTable />
+        </div>
 
-
-        <div />
+        <div className="pad-40" />
 
 
 
