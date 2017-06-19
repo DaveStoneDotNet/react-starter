@@ -1018,7 +1018,21 @@ table.runbook-table {
     opacity: 0.50;
 }
 
+.head-runner {
+    margin-top: 12px;
+    margin-left: 10px;
+    float: right;
+    width: 35px;
+    height: 5px;
+}
 
+.show-working-head-runner {
+    opacity: 0.50;
+}
+
+.hide-working-head-runner {
+    visibility: hidden;
+}
 
 .home-brand-button-block {
     display: block; 
