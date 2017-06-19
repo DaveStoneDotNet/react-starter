@@ -1014,9 +1014,11 @@ table.runbook-table {
 }
 
 .app-working-message {
-    letter-spacing: 2px;
+    font-size: 1.0em;
     opacity: 0.50;
 }
+
+
 
 .home-brand-button-block {
     display: block; 
@@ -1063,13 +1065,15 @@ table.runbook-table {
     padding: 10px 10px 10px 10px;
     border-top: solid 1px $gray-4;
     border-bottom: solid 1px $gray-4;
-    background-color: rgba(51, 51, 51, 0.90);
     width: 100%;
 }
 
+.non-working-footer {
+    background-color: rgba(51, 51, 51, 0.90);
+}
+
 .working-footer {
-    background-color: $dark-orange !important;
-    opacity: 0.95;
+    background-color: rgba(70, 70, 70, 0.90);
 }
 
 // ----------------------------------------------------------------------

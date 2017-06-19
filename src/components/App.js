@@ -25,7 +25,7 @@ class App extends React.Component {
               })
           }                        
         </div>
-        <AppFooter />
+        <AppFooter app={app} />
       </div>
     );
   }

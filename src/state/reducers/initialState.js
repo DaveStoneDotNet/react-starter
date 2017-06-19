@@ -29,6 +29,7 @@ export default {
                                                      info: 'INITIAL MONKEY INFO'
                                                   }, 
                             ajaxCount:            0, 
+                            ajaxMessage:          "Working...", 
                             isUserInitialized:    false, 
                             isLookupsInitialized: false, 
                             isAppInitialized:     false, 

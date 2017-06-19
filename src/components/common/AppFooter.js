@@ -1,5 +1,5 @@
-import React         from 'react';
-import PropTypes     from 'prop-types';
+import React     from 'react';
+import PropTypes from 'prop-types';
 
 class AppFooter extends React.Component {
 
@@ -14,9 +14,11 @@ class AppFooter extends React.Component {
 
         return (
             <div>
-                <div id="footer" className="footer pointer">
-                  <i className="fa fa-cog fa-spin gray-9 font-1-10" /> <span className="app-working-message">Working...</span>
-                  <span className="float-right"><i className="fa fa-clone gray-9 font-1-10" /></span>
+                <div id="footer" className={app.ajaxCount <= 0 ? "footer non-working-footer" : "footer working-footer"}>
+                    <span className="float-right"><i className="fa fa-clone gray-9 font-1-10" /></span>
+                    <div className={app.ajaxCount <= 0 ? "hide" : ""}>
+                        <i className="fa fa-cog fa-spin gray-9 font-1-10" /> <span className="app-working-message">{app.ajaxMessage}</span>
+                    </div>
                 </div>
             </div>
            );
@@ -24,7 +26,7 @@ class AppFooter extends React.Component {
 }
 
 AppFooter.propTypes = {
-                          app: PropTypes.object
+                          app: PropTypes.object.isRequired
                       };
 
 export default AppFooter;
