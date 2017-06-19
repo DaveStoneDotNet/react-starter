@@ -5,7 +5,7 @@ const actionTypeEndsInSuccess = (type) => {
     return type.substring(type.length - 8) === '_SUCCESS';
 };
 
-const ajaxStatusReducer = (state = initialState.ajaxCallsInProgress, action) => {
+const ajaxStatusReducer = (state = initialState.app.ajaxCount, action) => {
 
     if (action.type === types.BEGIN_AJAX_CALL) {
         return state + 1;

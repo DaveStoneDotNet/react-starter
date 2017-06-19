@@ -23,7 +23,7 @@ class Splash extends React.Component {
                             <img src="/images/running.gif" className="opacity-50"/>
                             <img src="/images/spiro.svg" className="spriro-02" />
                             <div>
-                                {app.ajaxCallsInProgress}
+                                {app.isAppInitialized.toString()}
                             </div>
                         </div>
                     </div>

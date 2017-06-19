@@ -2,9 +2,9 @@ export default {
                    app: {
                             user:                 {
                                                     UserId:          0,
-                                                    UserInitials:    "",
-                                                    UserDisplayName: "",
-                                                    PrimaryRoleName: "",
+                                                    UserInitials:    '',
+                                                    UserDisplayName: '',
+                                                    PrimaryRoleName: '',
                                                     RoleNames:       [""],
                                                     HasRole:         false,
                                                     IsAdministrator: false,
@@ -14,20 +14,23 @@ export default {
                             lookups:              {
                                                     MyLookups: [
                                                                 {
-                                                                  Code:        "", 
-                                                                  Description: "", 
+                                                                  Code:        '', 
+                                                                  Description: '', 
                                                                   SortOrder:   0
                                                                 }, 
                                                                 {
-                                                                  Code:        "", 
-                                                                  Description: "", 
+                                                                  Code:        '', 
+                                                                  Description: '', 
                                                                   SortOrder:   0
                                                                 }
                                                                ]
                                                   },
+                            home:                 {
+                                                     info: 'INITIAL MONKEY INFO'
+                                                  }, 
+                            ajaxCount:            0, 
                             isUserInitialized:    false, 
                             isLookupsInitialized: false, 
-                            isAppInitialized:     false
-                        }, 
-                   ajaxCallsInProgress:  0
+                            isAppInitialized:     false, 
+                        }
                };

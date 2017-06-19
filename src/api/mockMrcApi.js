@@ -33,14 +33,17 @@ const lookups = [
                   }
                 ];
 
+const arbitrary_data = {
+                         data: 'MOCK API DATA'
+                       };
+
 class MockMrcApi {
 
     static getUserProfile() {
 
         return new Promise((resolve) => {
             setTimeout(() => {
-                let u = Object.assign({}, users[0]);
-                resolve(u);
+                resolve(Object.assign({}, users[0]));
             }, delay);
         });
     }
@@ -50,6 +53,15 @@ class MockMrcApi {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(Object.assign([], lookups));
+            }, delay);
+        });
+    }
+
+    static getData() {
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(Object.assign({}, arbitrary_data));
             }, delay);
         });
     }

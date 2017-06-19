@@ -24,8 +24,12 @@ import initialState from '../reducers/initialState';
 //                   isUserInitialized:    false,
 //                   isLookupsInitialized: false,
 //                   isAppInitialized:     false,
-//                   ajaxCallsInProgress:  0
+//                   ajaxCount:            0
 //               }
+
+const actionTypeEndsInSuccess = (type) => {
+    return type.substring(type.length - 8) === '_SUCCESS';
+};
 
 export default function appReducer(state = initialState.app, action) {
 
@@ -43,6 +47,22 @@ export default function appReducer(state = initialState.app, action) {
 
         case types.GET_LOOKUPS_SUCCESS:
             new_state = Object.assign({}, state, { lookups: action.lookups });
+            return new_state;
+
+        case types.GET_DATA_SUCCESS:
+            new_state = Object.assign({}, state, { home: action.home });
+            return new_state;
+
+        case types.BEGIN_AJAX_CALL:
+            new_state = Object.assign({}, state, { ajaxCount: state.ajaxCount + 1 });
+            return new_state;
+
+        case types.END_AJAX_CALL:
+            new_state = Object.assign({}, state, { ajaxCount: state.ajaxCount - 1 });
+            return new_state;
+
+        case types.AJAX_CALL_ERROR:
+            new_state = Object.assign({}, state, { ajaxCount: state.ajaxCount - 1 });
             return new_state;
 
         default:

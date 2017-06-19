@@ -1,6 +1,5 @@
 ﻿
 import MrcApi            from '../api/mockMrcApi';
-import { beginAjaxCall } from './ajaxStatusActions';
 import * as types        from '../constants/actionTypes';
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -36,9 +35,31 @@ import * as types        from '../constants/actionTypes';
 // 
 // -----------------------------------------------------------------------------------------------------------------------
 
-export function getLookupsSuccess(lookups) { return { type: types.GET_LOOKUPS_SUCCESS, lookups: lookups }; }
-export function getUserSuccess(user)       { return { type: types.GET_USER_SUCCESS,    user:    user    }; }
-export function updateIsInitialized(app)   { return { type: types.IS_INITIALIZED,      app:     app     }; }
+export function getLookupsSuccess(lookups) { return { type: types.GET_LOOKUPS_SUCCESS, lookups:   lookups   }; }
+export function getUserSuccess(user)       { return { type: types.GET_USER_SUCCESS,    user:      user      }; }
+export function updateIsInitialized(app)   { return { type: types.IS_INITIALIZED,      app:       app       }; }
+
+export function beginAjaxCall(ajaxCount)   { return { type: types.BEGIN_AJAX_CALL,     ajaxCount: ajaxCount }; }
+export function endAjaxCall(ajaxCount)     { return { type: types.END_AJAX_CALL,       ajaxCount: ajaxCount }; }
+export function ajaxCallError(ajaxCount)   { return { type: types.AJAX_CALL_ERROR,     ajaxCount: ajaxCount }; }
+
+
+// The parameter name of this function is arbitrary. You could name it 'monkey', 'data', 'home', whatever...
+// Shown below, the parameter name I'm referring to is 'data'. I many cases, this will typically just be 
+// a 'response' returned by an api.
+// The property name of the return object is significant however, and represents the property name of the
+// property being updated as indicated by 'initialState.js'. This name is NOT arbitrary and must be 
+// referenced as 'home' since that's the property intended to be updated/replaced by the corresponding 
+// reducer. For example, suppose you drunk and you typed 'monkey' instead of 'home'...
+//  
+//      export function getDataSuccess(data) { return { type: types.GET_DATA_SUCCESS, home:   data  }; }   CORRECT
+//      export function getDataSuccess(data) { return { type: types.GET_DATA_SUCCESS, monkey: data  }; }   WRONG
+//
+// If you typed 'monkey' instead of 'home' then nothing would get updated and no error would occur, but 
+// most importantly, 'home' would NOT be updated.
+
+export function getDataSuccess(data)       { return { type: types.GET_DATA_SUCCESS,    home: data  }; }
+
 
 // -----------------------------------------------------------------------------------------------------------------------
 // Thunks:
@@ -70,8 +91,9 @@ export function getLookups() {
                 dispatch(updateIsInitialized({ isLookupsInitialized: true }));
                 isLookupsInitialized = true;
                 isAppInitialized(dispatch);
+                dispatch(endAjaxCall());
             })
-            .catch(error => { throw (error); });
+            .catch(error => { dispatch(endAjaxCall()); throw (error); });
     };
 }
 
@@ -84,8 +106,21 @@ export function getUserProfile() {
                 dispatch(updateIsInitialized({ isUserInitialized: true }));
                 isUserInitialized = true;
                 isAppInitialized(dispatch);
+                dispatch(endAjaxCall());
             })
-            .catch(error => { throw (error); });
+            .catch(error => { dispatch(endAjaxCall()); throw (error); });
+    };
+}
+
+export function getData() {
+    return function (dispatch) {
+        dispatch(beginAjaxCall());
+        return MrcApi.getData()
+            .then(response => { 
+                dispatch(getDataSuccess(response)); 
+                dispatch(endAjaxCall());
+            })
+            .catch(error => { dispatch(endAjaxCall()); throw (error); });
     };
 }
 
