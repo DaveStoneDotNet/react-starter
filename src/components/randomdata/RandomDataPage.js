@@ -5,8 +5,6 @@ import { connect }            from 'react-redux';
 import { Button }             from 'react-bootstrap';
 import { Modal }              from 'react-bootstrap';
 
-import ReactTable             from 'react-table'
-
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Sector, Cell } from 'recharts';
 
 import toastr                 from 'toastr';
@@ -15,7 +13,7 @@ import RandomTable            from './RandomTable';
 
 import * as appActions        from '../../state/actions/appActions';
 
-import 'react-table/react-table.css'
+import 'react-table/react-table.css';
 
 class RandomDataPage extends React.Component {
 
@@ -42,7 +40,7 @@ class RandomDataPage extends React.Component {
 
     let getData = () => {
       this.setState({ isSaving: true });
-      this.props.actions.getData()
+      this.props.actions.appActions.getData()
                         .then(() => {
                           toastr.success('Loaded some random data', 'SUCCESS');
                         })
@@ -119,13 +117,14 @@ class RandomDataPage extends React.Component {
           </tbody>
         </table>
 
+        <div className="pad-20" />
+
+        <div>
+          Random Table
+        </div>
         <div className="col-md-6 pad-top-20">
           <RandomTable />
         </div>
-
-        <div className="pad-40" />
-
-
 
         <Modal show={this.state.show} onHide={closeModal} container={this}>
           <Modal.Body>
@@ -153,7 +152,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-            actions: bindActionCreators(appActions, dispatch)
+            actions: {
+                        appActions: bindActionCreators(appActions, dispatch)
+                     }
          };
 }
 

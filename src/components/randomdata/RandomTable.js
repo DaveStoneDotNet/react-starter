@@ -1,117 +1,130 @@
-import React      from 'react'
-import ReactTable from 'react-table'
-import namor      from 'namor'
-import _          from 'lodash'
+import React                  from 'react';
+import ReactTable             from 'react-table';
+import { bindActionCreators } from 'redux';
+import { connect }            from 'react-redux';
 
-const rawData = _.map(_.range(3424), d => {
-    return {
-        firstName: namor.generate({ words: 1, numbers: 0 }),
-        lastName: namor.generate({ words: 1, numbers: 0 }),
-        age: Math.floor(Math.random() * 30)
-    }
-})
+import toastr                 from 'toastr';
 
-// Mock the server. It's job is simple: use the table model to sort and return the paged data...
+import * as randomDataActions from '../../state/actions/randomDataActions';
 
-const requestData = (pageSize, page, sorted, filtered) => {
-
-    return new Promise((resolve, reject) => {
-
-        // On the server, you'll likely use SQL or noSQL or some other query language to do this.
-        // For this mock, we'll just use lodash...
-
-        let filteredData = rawData
-
-        if (filtered.length) {
-            filteredData = filtered.reduce(
-                (filteredSoFar, nextFilter) => {
-                    return filteredSoFar.filter(
-                        (row) => {
-                            return (row[nextFilter.id] + '').includes(nextFilter.value)
-                        })
-                }
-                , filteredData)
-        }
-        const sortedData = _.orderBy(filteredData, sorted.map(sort => {
-            return row => {
-                if (row[sort.id] === null || row[sort.id] === undefined) {
-                    return -Infinity
-                }
-                return typeof row[sort.id] === 'string' ? row[sort.id].toLowerCase() : row[sort.id]
-            }
-        }), sorted.map(d => d.desc ? 'desc' : 'asc'))
-
-        // Be sure to send back the rows to be displayed, and any other pertinent information, like how many pages there are in total.
-        const res = {
-                        rows:  sortedData.slice(pageSize * page, (pageSize * page) + pageSize),
-                        pages: Math.ceil(filteredData.length / pageSize)
-                    }
-
-        // Here we'll simulate a server response with 500ms of delay.
-        setTimeout(() => resolve(res), 10000)
-    })
-}
+import MrcApi     from '../../api/mockMrcApi';
 
 class RandomTable extends React.Component {
+
     constructor() {
-        super()
+
+        super();
+
         this.state = {
-                         data:    [],
-                         pages:   null,
-                         loading: true
-                     }
-        this.fetchData = this.fetchData.bind(this)
+                         loading: false
+                     };
+
+        this.fetchData = this.fetchData.bind(this);
     }
+
+    // The 'fetchData' method gets called whenever the table model changes, or the user sorts or changes pages.
+    // You can set the 'loading' prop of the table to true to use the built-in one or show you're own loading bar if you want.
 
     fetchData(state, instance) {
 
-        // Whenever the table model changes, or the user sorts or changes pages, this method gets called and passed the current table model.
-        // You can set the `loading` prop of the table to true to use the built-in one or show you're own loading bar if you want.
+        this.setState({ loading: true });
 
-        this.setState({ loading: true })
-
-        // Request the data however you want.  Here, we'll use our mocked service we created earlier
-
-        requestData(state.pageSize, state.page, state.sorted, state.filtered)
+        this.props.actions.randomDataActions.getRandomTableData(state.pageSize, state.page, state.sorted, state.filtered)
             .then((res) => {
-                // Now just get the rows of data to your React Table (and update anything else like total pages or loading)
-                this.setState({
-                                  data:    res.rows,
-                                  pages:   res.pages,
-                                  loading: false
-                              })
+
+              toastr.success('Loaded some random data', 'SUCCESS');
+              console.log(res);
+              console.log(this.state);
             })
+            .catch((error) => { 
+              toastr.error('error');
+              console.log(error);
+            })
+            .then(() => {
+              this.setState({ loading: false });
+            });
+        
     }
 
     render() {
+
+        const loadingState = this.state.loading;
+        
+        const tableColumns = [
+                                { 
+                                    Header:          'ID', 
+                                    accessor:        'id', 
+                                    resizable:       false, 
+                                    width:           30, 
+                                    className:       'align-right',
+                                    headerClassName: 'align-right' 
+                                }, 
+                                { 
+                                    id:              'lastName', 
+                                    Header:          'Last Name',  
+                                    accessor:        d => d.lastName, 
+                                    width:           100, 
+                                    headerClassName: 'align-left' 
+                                }, 
+                                { 
+                                    Header:          'First Name', 
+                                    accessor:        'firstName', 
+                                    width:           100, 
+                                    headerClassName: 'align-left' 
+                                }, 
+                                { 
+                                    Header:          'Age', 
+                                    accessor:        'age',
+                                    width:           50, 
+                                    className:       'align-right',
+                                    headerClassName: 'align-right' 
+                                }, 
+                                { 
+                                    Header:          'Create Date', 
+                                    accessor:        'createDate',
+                                    width:           150, 
+                                    className:       'align-right',
+                                    headerClassName: 'align-right' 
+                                }, 
+                                { 
+                                    Header:          ' ', 
+                                }
+                             ];
+
         return (
             <div>
-                <div className='table-wrap'>
-                    <ReactTable className='-striped -highlight'
-                                columns={
-                                          [
-                                            { Header: 'First Name', accessor: 'firstName' }, 
-                                            { Header: 'Last Name',  accessor: d => d.lastName, id: 'lastName' }, 
-                                            { Header: 'Age',        accessor: 'age' }
-                                          ]
-                                        }
-                                manual                          // Forces table not to paginate or sort automatically, so it can be handled server-side
-                                filterable
+                <div className="table-wrap">
+                    <ReactTable className="-striped -highlight"
+                                columns={tableColumns}
                                 defaultPageSize={10}
-                                data={this.state.data}          // Set the rows to be displayed
-                                pages={this.state.pages}        // Display the total number of pages
-                                loading={this.state.loading}    // Display the loading overlay when we need it
-                                onFetchData={this.fetchData}    // Request new data when things change
+                                manual                                               // Forces table not to paginate or sort automatically, so it can be handled server-side
+                                data={this.props.randomData.randomTableData.rows}    // Set the rows to be displayed
+                                pages={this.props.randomData.randomTableData.pages}  // Display the total number of pages
+                                onFetchData={this.fetchData}                         // Request new data when things change
+                                loading={loadingState}
+                                getTdProps={(state, rowInfo, column, instance) => { return { onClick: e => { console.log('SELECTED: '+ rowInfo.original.id + ' ' + rowInfo.original.firstName + ' ' + rowInfo.original.lastName ) } } }}
                     />
                 </div>
-                <div style={{ textAlign: 'center' }}>
-                    <br />
-                    <em>Tip: Hold shift when sorting to multi-sort!</em>
-                </div>
             </div>
-        )
+        );
     }
 
 }
 
-export default RandomTable;
+function mapStateToProps(state, ownProps) {
+    console.log('MAP STATE TO PROPS IN RANDOM TABLE');
+    console.log(state);
+    return {
+              randomData: state.randomData
+           };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+            actions: {
+                        randomDataActions: bindActionCreators(randomDataActions, dispatch)
+                     }
+         };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RandomTable);
