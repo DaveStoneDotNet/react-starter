@@ -666,6 +666,10 @@ textarea {
     display: none;
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 .top-fixed-menu-buttons {
     position: fixed;
     right: 100px;

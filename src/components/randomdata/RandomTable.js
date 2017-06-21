@@ -2,6 +2,7 @@ import React                  from 'react';
 import ReactTable             from 'react-table';
 import { bindActionCreators } from 'redux';
 import { connect }            from 'react-redux';
+import { ProgressBar }        from 'react-bootstrap';
 
 import toastr                 from 'toastr';
 
@@ -55,7 +56,7 @@ class RandomTable extends React.Component {
                                     Header:          'ID', 
                                     accessor:        'id', 
                                     resizable:       false, 
-                                    width:           30, 
+                                    width:           50, 
                                     className:       'align-right',
                                     headerClassName: 'align-right' 
                                 }, 
@@ -104,11 +105,13 @@ class RandomTable extends React.Component {
                                 loading={loadingState}
                                 getTdProps={(state, rowInfo, column, instance) => { return { onClick: e => { console.log('SELECTED: '+ rowInfo.original.id + ' ' + rowInfo.original.firstName + ' ' + rowInfo.original.lastName ) } } }}
                     />
+                    <div>
+                        <ProgressBar active now={100} active={loadingState} className={loadingState ? '"opacity-90"' : 'invisible'} style={{height: '5px'}} />
+                    </div>
                 </div>
             </div>
         );
     }
-
 }
 
 function mapStateToProps(state, ownProps) {
