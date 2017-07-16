@@ -32,6 +32,7 @@
   "license":         "MIT",
   "dependencies":    {
                        "bootstrap":          "3.3.6",
+                       "countdown":          "2.6.0",
                        "font-awesome":       "4.7.0",
                        "lodash":             "4.17.4", 
                        "moment":             "2.18.1", 
